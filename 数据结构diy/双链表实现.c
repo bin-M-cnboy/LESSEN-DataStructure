@@ -100,22 +100,22 @@ void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
     }
     node* todel;
 
+    // 分类讨论：删除头节点、尾节点、中间节点【注意】
     if (index == 0) {
         todel = obj->head;
-        // 如果不是最后一个节点，才更新下一个节点的prev指针
-        if (todel->next != NULL) {
+        if (todel->next != NULL) {// 是否为空链表
             todel->next->prev = NULL;
         } else {
-            // 如果是最后一个节点，更新tail
             obj->tail = NULL;
         }
         obj->head = todel->next;
-    } else if (index == obj->len - 1) {
-        // 处理删除最后一个节点的情况
+    } 
+    else if (index == obj->len - 1) {
         todel = obj->tail;
         todel->prev->next = NULL;
         obj->tail = todel->prev;
-    } else {
+    } 
+    else {
         node* cur = obj->head;
         for (int i = 0; i < index - 1; i++) {
             cur = cur->next;
