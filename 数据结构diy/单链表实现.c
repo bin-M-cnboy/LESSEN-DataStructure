@@ -1,52 +1,119 @@
-// 单链表节点定义
-typedef struct SinglyNode {
-    int val;
-    struct SinglyNode* next;  
-} SinglyNode;
+#include <stdio.h>
+#include <stdlib.h>
 
-// 创建新节点
-SinglyNode* createSinglyNode(int val) {
-    SinglyNode* node = (SinglyNode*)malloc(sizeof(SinglyNode));
-    node->val = val;
-    node->next = NULL;
-    return node;
+typedef struct NODE{
+    int val;
+    struct NODE* next;
+} node;
+
+typedef struct {
+    node* head;
+    int length;  // 修正拼写：lenth -> length
+} MyLinkedList;
+
+
+MyLinkedList* myLinkedListCreate() {
+    MyLinkedList* obj = (MyLinkedList*)malloc(sizeof(MyLinkedList));
+    obj->head = NULL;
+    obj->length = 0;
+    return obj;
 }
 
-// 在链表末尾添加节点
-void appendSingly(SinglyNode** head, int val) {
-    SinglyNode* newNode = createSinglyNode(val);
-    if (*head == NULL) {
-        *head = newNode;
-        return;
+int myLinkedListGet(MyLinkedList* obj, int index) {
+    if (obj == NULL || index < 0 || index >= obj->length) {
+        return -1;
     }
-    // 遍历到最后一个节点（单链表必须从头遍历）
-    SinglyNode* cur = *head;
-    while (cur->next != NULL) {
+    node* cur = obj->head;
+    for (int i = 0; i < index; i++) {
         cur = cur->next;
     }
-    cur->next = newNode;
+    return cur->val;
 }
 
-// 打印单链表
-void printSinglyList(SinglyNode* head) {
-    SinglyNode* cur = head;
-    printf("单链表: ");
-    while (cur != NULL) {
-        printf("%d ", cur->val);
-        if (cur->next != NULL) printf("-> ");
-        cur = cur->next;  // 只能向后遍历
+void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode->val = val;
+    newNode->next = obj->head;
+    obj->head = newNode;
+    obj->length++;
+}
+
+void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode->val = val;
+    newNode->next = NULL;
+
+    if (obj->head == NULL) {  
+        obj->head = newNode;
+    } else {
+        node* cur = obj->head;
+        while (cur->next != NULL) {
+            cur = cur->next;
+        }
+        cur->next = newNode;
     }
-    printf("\n");
+    obj->length++;  
 }
 
-// 测试单链表
-int main() {
-    SinglyNode* head = NULL;
-    appendSingly(&head, 10);
-    appendSingly(&head, 20);
-    appendSingly(&head, 30);
-    printSinglyList(head);  // 输出: 单链表: 10 -> 20 -> 30
-    
-    // 释放内存（省略实现）
-    return 0;
+void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
+    if (obj == NULL || index < 0 || index > obj->length) {
+        return;
+    }
+
+    if (index == 0) {
+        myLinkedListAddAtHead(obj, val);
+        return;  
+    }
+    if (index == obj->length) {
+        myLinkedListAddAtTail(obj, val);
+        return;  
+    }
+
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode->val = val;
+
+    node* cur = obj->head;
+    for (int i = 0; i < index - 1; i++) {
+        cur = cur->next;
+    }
+    newNode->next = cur->next;
+    cur->next = newNode;
+    obj->length++; 
+}
+
+void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
+    // 检查obj有效性及索引合法性【注意！！！】
+    if (obj == NULL || index < 0 || index >= obj->length) {
+        return;
+    }
+    node* todel;
+
+    if (index == 0) {  // 删除头节点
+        todel = obj->head;
+        obj->head = obj->head->next;
+    } 
+    else {
+        node* cur = obj->head;
+        for (int i = 0; i < index - 1; i++) {
+            cur = cur->next;
+        }
+        todel = cur->next;
+        cur->next = todel->next;
+    }
+
+    free(todel);  
+    obj->length--;
+}
+
+void myLinkedListFree(MyLinkedList* obj) {
+    node* cur = obj->head;
+    // 修复：循环条件改为cur != NULL，确保所有节点被释放
+    while (cur != NULL) {
+        node* tmp = cur;
+        cur = cur->next;
+        free(tmp);  
+    }
+    obj->head = NULL;
+    obj->length = 0;
+    free(obj);  // 释放链表对象本身【注意！！！】
 }
