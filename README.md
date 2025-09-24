@@ -1,4 +1,4 @@
-# TencentCloud1-C
+# LESSEN-DataStructure
 ***Author: Bin Ma | 马斌***   
 This is the repository I used to store code during my undergraduate studies at USTC, primarily for recording labs from data structure courses. The code is primarily written in C++.
 
