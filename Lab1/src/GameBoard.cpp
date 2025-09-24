@@ -84,7 +84,7 @@ void GameBoard::slide(Direction direction) {
                 for (int col = 0; col < 4; ++col) {
                     if (board[row][col] != 0) {
                         std::swap(board[row][target], board[row][col]);
-                        if (target != row) board[row][col] = 0;
+                        if (target != col) board[row][col] = 0;
                         ++target;
                     }
                 }
@@ -97,7 +97,7 @@ void GameBoard::slide(Direction direction) {
                 for (int col = 3; col >= 0; --col) {
                     if (board[row][col] != 0) {
                         std::swap(board[row][target], board[row][col]);
-                        if (target != row) board[row][col] = 0;
+                        if (target != col) board[row][col] = 0;
                         --target;
                     }
                 }
@@ -123,7 +123,7 @@ int GameBoard::merge(Direction direction) {
         case Direction::DOWN:
             // TODO
             for (int col = 0; col < 4; ++col) {
-                for (int row = 0; row < 4; ++row) {
+                for (int row = 0; row < 3; ++row) {
                     if (board[row][col] != 0 && board[row][col] == board[row + 1][col]) {
                         board[row][col] *= 2;
                         moveScore += board[row][col];
@@ -135,7 +135,7 @@ int GameBoard::merge(Direction direction) {
         case Direction::LEFT:
             // TODO
             for (int row = 0; row < 4; ++row) {
-                for (int col = 0; col < 4; ++col) {
+                for (int col = 0; col < 3; ++col) {
                     if (board[row][col] != 0 && board[row][col] == board[row][col + 1]) {
                         board[row][col] *= 2;
                         moveScore += board[row][col];
