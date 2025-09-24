@@ -14,25 +14,37 @@ void Game::initGame() {
 void Game::updateGame(Direction direction) {
     // Save current state to history
     // TODO 1
+    historyGameBoards.push(gameBoard);
 
     // Get move score and update score
     // TODO 2
+    int movescore = gameBoard.move(direction);
+    if(movescore > 0){
+        score += movescore;
 
     // update move count
     // TODO 3
-
+        ++moveCount;        
+        }
+    // if(movescore <= 0) undoLastMove();
 }
 
 void Game::undoLastMove() {
     if (historyGameBoards.size() > 1) {
         // Remove current state
         // TODO 1
-
+        historyGameBoards.pop();
+        
         // Restore previous state
         // TODO 2
+        gameBoard = historyGameBoards.top();
+        score = gameBoard.getScore();
+        moveCount = gameBoard.getMoveCount(); 
 
     } else {
         gameBoard.reset();
+        score = 0;
+        moveCount = 0;
     }
 }
 

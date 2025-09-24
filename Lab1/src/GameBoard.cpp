@@ -30,11 +30,22 @@ void GameBoard::reset() {
 int GameBoard::move(Direction direction) {
     // Slide and merge, anyother?
     // TODO 1
+    slide(direction);
+    score = merge(direction);
+    slide(direction);
 
     // Add a new tile after every move
     // You can refer to the reset() function to see how to add a new tile
     // TODO 2
+    int x = dist(generator);
+    int y = dist(generator);
+    while (board[x][y] != 0) { // Ensure we don't place a tile on an occupied cell
+        x = dist(generator);
+        y = dist(generator);
+    }
+    board[x][y] = (value_dist(generator) + 1) * 2; // Place either a 2 or a 4
 
+    return score;
 }
 
 void GameBoard::slide(Direction direction) {
@@ -53,12 +64,42 @@ void GameBoard::slide(Direction direction) {
             break;
         case Direction::DOWN:
             // TODO
+            for (int col = 0; col < 4; ++col) {
+                int target = 0;
+                for (int row = 0; row < 4; ++row) {
+                    if (board[row][col] != 0) {
+                        std::swap(board[target][col], board[row][col]);
+                        if (target != row) board[row][col] = 0;
+                        ++target;
+                    }
+                }
+            }
             break;
         case Direction::LEFT:
             // TODO
+            for (int row = 0; row < 4; ++row) {
+                int target = 0;
+                for (int col = 0; col < 4; ++col) {
+                    if (board[row][col] != 0) {
+                        std::swap(board[target][col], board[row][col]);
+                        if (target != row) board[row][col] = 0;
+                        ++target;
+                    }
+                }
+            }
             break;
         case Direction::RIGHT:
             // TODO
+            for (int row = 0; row < 4; ++row) {
+                int target = 3;
+                for (int col = 3; col >= 0; --col) {
+                    if (board[row][col] != 0) {
+                        std::swap(board[target][col], board[row][col]);
+                        if (target != row) board[row][col] = 0;
+                        --target;
+                    }
+                }
+            }
             break;
     }
 }
@@ -79,12 +120,39 @@ int GameBoard::merge(Direction direction) {
             break;
         case Direction::DOWN:
             // TODO
+            for (int col = 0; col < 4; ++col) {
+                for (int row = 0; row < 4; ++row) {
+                    if (board[row][col] != 0 && board[row][col] == board[row + 1][col]) {
+                        board[row][col] *= 2;
+                        moveScore += board[row][col];
+                        board[row - 1][col] = 0;
+                    }
+                }
+            }
             break;
         case Direction::LEFT:
             // TODO
+            for (int row = 0; row < 4; ++row) {
+                for (int col = 0; col < 4; ++col) {
+                    if (board[row][col] != 0 && board[row][col] == board[row][col + 1]) {
+                        board[row][col] *= 2;
+                        moveScore += board[row][col];
+                        board[row][col + 1] = 0;
+                    }
+                }
+            }
             break;
         case Direction::RIGHT:
             // TODO
+            for (int row = 0; row < 4; ++row) {
+                for (int col = 3; col > 0; --col) {
+                    if (board[row][col] != 0 && board[row][col] == board[row][col - 1]) {
+                        board[row][col] *= 2;
+                        moveScore += board[row][col];
+                        board[row][col - 1] = 0;
+                    }
+                }
+            }
             break;
     }
 
@@ -94,14 +162,39 @@ int GameBoard::merge(Direction direction) {
 bool GameBoard::isGameOver() const {
     // Check if there are any empty tiles
     // TODO
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            if (board[row][col] == 0) return false;
+        }
+    }
 
     // Check if any adjacent tiles can merge
     // TODO
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 3; ++col) {
+            if (board[row][col] == board[row][col + 1]) 
+                return false;
+        }
+    }
+    for (int row = 0; row < 3; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            if (board[row][col] == board[row + 1][col]) 
+                return false;
+        }
+    }
+
+    return true;
 }
 
 bool GameBoard::hasWinningTile() const {
     // Check if there is a tile with the value 2048
     // TODO
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            if (board[row][col] == 2048) return true;
+        }
+    }
+    return false;
 }
 
 

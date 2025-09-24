@@ -32,9 +32,11 @@ int main(){
         if (input == InputType::UNDO) {
             // Implement undo functionality
             // TODO
+            game.undoLastMove();
         } else if (input == InputType::QUIT_GAME) {
             // Think about how to handle quitting the game
             // TODO
+            break;
         } else {
             Direction direction;
             switch (input) {
@@ -57,12 +59,13 @@ int main(){
 
             // Update the game state
             // TODO
-
+            game.updateGame(direction);
         }
 
         // Render the updated game board
         // refer to how the game is initially rendered
         // TODO
+        TerminalRender::render(game.getGameBoard(), game.getScore(), game.getMoveCount());
 
         // Check for win or lose conditions
         if (game.hasWon()) {
@@ -76,7 +79,7 @@ int main(){
 
     // Display elapsed time
     // TODO
+    std::cout << "Elapsed time: " << game.getElapsedTime() << " seconds" << std::endl;
 
     return 0;
 }
-
