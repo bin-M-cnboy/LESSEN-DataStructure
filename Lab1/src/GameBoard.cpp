@@ -83,7 +83,7 @@ void GameBoard::slide(Direction direction) {
                 int target = 0;
                 for (int col = 0; col < 4; ++col) {
                     if (board[row][col] != 0) {
-                        std::swap(board[target][col], board[row][col]);
+                        std::swap(board[row][target], board[row][col]);
                         if (target != row) board[row][col] = 0;
                         ++target;
                     }
@@ -96,7 +96,7 @@ void GameBoard::slide(Direction direction) {
                 int target = 3;
                 for (int col = 3; col >= 0; --col) {
                     if (board[row][col] != 0) {
-                        std::swap(board[target][col], board[row][col]);
+                        std::swap(board[row][target], board[row][col]);
                         if (target != row) board[row][col] = 0;
                         --target;
                     }
@@ -127,7 +127,7 @@ int GameBoard::merge(Direction direction) {
                     if (board[row][col] != 0 && board[row][col] == board[row + 1][col]) {
                         board[row][col] *= 2;
                         moveScore += board[row][col];
-                        board[row - 1][col] = 0;
+                        board[row + 1][col] = 0;
                     }
                 }
             }

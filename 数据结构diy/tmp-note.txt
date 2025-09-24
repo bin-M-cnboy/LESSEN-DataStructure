@@ -1,0 +1,14 @@
+# 进入 build 目录（如果存在）
+cd /workspace/TencentCloud1-C/Lab1/build
+
+# 清除之前的编译产物（针对 Windows 的编译结果）
+rm -rf *
+
+# 重新生成 Makefile（针对当前 Linux 环境）
+cmake ..
+
+# 编译项目（生成 Linux 可执行文件，通常没有 .exe 后缀）
+make
+
+# 运行生成的程序（假设生成的文件名为 2048，无 .exe 后缀）
+./2048
