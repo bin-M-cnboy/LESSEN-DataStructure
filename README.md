@@ -1,6 +1,6 @@
 # TencentCloud1-C
 ***Author: Bin Ma | 马斌***   
-This is a repository for recording code during my undergraduate study at USTC, which is specifically created for programs written in C language.
+This is the repository I used to store code during my undergraduate studies at USTC, primarily for recording labs from data structure courses. The code is primarily written in C++.
 
 ### Using Platform:
 - Tencent - Cloud Studio

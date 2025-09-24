@@ -30,9 +30,16 @@ void GameBoard::reset() {
 int GameBoard::move(Direction direction) {
     // Slide and merge, anyother?
     // TODO 1
+    int movescore = 0;
     slide(direction);
+
+    while(true){
     int score = merge(direction);
-    slide(direction);
+    if (score == 0) break;
+    
+    movescore += score;
+    slide(direction); 
+    }
 
     // Add a new tile after every move
     // You can refer to the reset() function to see how to add a new tile
@@ -47,7 +54,7 @@ int GameBoard::move(Direction direction) {
     }
     board[x][y] = (value_dist(generator) + 1) * 2; // Place either a 2 or a 4
 
-    return score;
+    return movescore;
 }
 
 void GameBoard::slide(Direction direction) {
