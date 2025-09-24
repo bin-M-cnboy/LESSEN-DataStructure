@@ -38,13 +38,9 @@ void Game::undoLastMove() {
         // Restore previous state
         // TODO 2
         gameBoard = historyGameBoards.top();
-        score = gameBoard.getScore();
-        moveCount = gameBoard.getMoveCount(); 
 
     } else {
         gameBoard.reset();
-        score = 0;
-        moveCount = 0;
     }
 }
 

@@ -31,12 +31,14 @@ int GameBoard::move(Direction direction) {
     // Slide and merge, anyother?
     // TODO 1
     slide(direction);
-    score = merge(direction);
+    int score = merge(direction);
     slide(direction);
 
     // Add a new tile after every move
     // You can refer to the reset() function to see how to add a new tile
     // TODO 2
+    std::uniform_int_distribution<int> dist(0, 3);  // [0, 3] uniform distribution
+    std::uniform_int_distribution<int> value_dist(0, 1);
     int x = dist(generator);
     int y = dist(generator);
     while (board[x][y] != 0) { // Ensure we don't place a tile on an occupied cell
