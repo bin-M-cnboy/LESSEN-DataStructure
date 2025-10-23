@@ -26,7 +26,7 @@ class queue : public list<data_base> {
         }
 
         void push(data_base push_data) override {
-            if ((tail_index + 1) % MAX_LINK_LIST_NUM == top_index) return;
+            if ((tail_index + 1) % MAX_LINK_LIST_NUM == top_index) return; // full queue
 
             list_data[tail_index] = push_data;
             tail_index = (tail_index + 1) % MAX_LINK_LIST_NUM;
