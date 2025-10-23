@@ -44,6 +44,13 @@ int GameBoard::move(Direction direction) {
     // Add a new tile after every move
     // You can refer to the reset() function to see how to add a new tile
     // TODO 2
+    bool tmp = false;
+        for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            if (board[row][col] == 0) tmp = true;
+        }
+    }
+    if(tmp){
     std::uniform_int_distribution<int> dist(0, 3);  // [0, 3] uniform distribution
     std::uniform_int_distribution<int> value_dist(0, 1);
     int x = dist(generator);
@@ -53,6 +60,7 @@ int GameBoard::move(Direction direction) {
         y = dist(generator);
     }
     board[x][y] = (value_dist(generator) + 1) * 2; // Place either a 2 or a 4
+    }
 
     return movescore;
 }

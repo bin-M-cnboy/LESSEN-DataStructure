@@ -14,19 +14,22 @@ void Game::initGame() {
 void Game::updateGame(Direction direction) {
     // Save current state to history
     // TODO 1
+    int movescore = gameBoard.move(direction);
     historyGameBoards.push(gameBoard);
 
     // Get move score and update score
     // TODO 2
-    int movescore = gameBoard.move(direction);
+    
     if(movescore > 0){
         score += movescore;
 
     // update move count
     // TODO 3
-        ++moveCount;        
+        ++moveCount;
         }
-    // if(movescore <= 0) undoLastMove();
+    else{
+        return;
+    }
 }
 
 void Game::undoLastMove() {
@@ -38,7 +41,7 @@ void Game::undoLastMove() {
         // Restore previous state
         // TODO 2
         gameBoard = historyGameBoards.top();
-
+        
     } else {
         gameBoard.reset();
     }
