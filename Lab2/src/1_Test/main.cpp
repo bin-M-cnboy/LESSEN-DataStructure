@@ -1,8 +1,8 @@
 #include <iostream>
 
 // .h is okay here, please don't include the 'cpp's here
-#include "./stack.h"
-#include "./queue.h"
+#include "stack.h"
+#include "queue.h"
 
 // Maybe add the following line to the program, it announces the namespace of the rest of the program. You may see another way in list.h
 // using namespace std;
