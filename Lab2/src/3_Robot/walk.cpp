@@ -43,7 +43,7 @@ int walk::get_value() {
         if (current.value > max_value) max_value = current.value;
         if (current.steps <= 0) continue;
         
-        // 尝试移动到每个金币位置
+        // 尝试移动到每个金币位置 BFS
         for (int i = 0; i < gold_num; i++) {            
             if (current.get_gold.find(i)) continue; // 如果已经获取过这个金币，跳过
             
@@ -52,7 +52,6 @@ int walk::get_value() {
             int distance = compute_distance(i, current.x, current.y);
             
             if (distance <= current.steps) {
-                // 创建新状态
                 element next;
                 next.x = coin_x;
                 next.y = coin_y;
@@ -63,7 +62,7 @@ int walk::get_value() {
                 for (int j = 0; j < gold_num; j++) {
                     if (current.get_gold.find(j)) next.get_gold.insert(j);
                 }
-                next.get_gold.insert(i);  // 添加当前金币
+                next.get_gold.insert(i);
                 
                 q.push(next);
             }
