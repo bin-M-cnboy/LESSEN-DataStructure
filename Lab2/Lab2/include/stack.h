@@ -11,26 +11,33 @@ class stack : public list<data_base> {
         ~stack() = default;
 
         bool empty() override {
-            // TODO
-            return true;
+            return top_index == 0;
         }
+
         void pop() override {
-            // TODO
+            if (!empty()) top_index--;
         }
+
         data_base top() override {
-            // TODO
-            data_base tmp;
-            return tmp;
+            if (empty()) return data_base{};
+            
+            return list_data[top_index - 1];
         }
+
         void push(data_base push_data) override {
-            // TODO
+            if (top_index < MAX_LINK_LIST_NUM) {
+                list_data[top_index] = push_data;
+                top_index++;
+            }
         }
+
         void clear() override {
-            // TODO
+            top_index = 0;
         }
+
     private:
         int top_index = 0;
         data_base list_data[MAX_LINK_LIST_NUM];
-};
+    };
 
 }
