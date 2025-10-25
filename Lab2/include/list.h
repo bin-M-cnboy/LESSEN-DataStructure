@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_LINK_LIST_NUM 1001
+#define MAX_LINK_LIST_NUM 10001
 
 namespace DATA_STRUCTURE {
 

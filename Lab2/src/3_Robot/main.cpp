@@ -3,7 +3,7 @@
 int main() {
     int steps = 6;
     int n = 5;
-    int gold[1001] = {1, 2, 
+    int gold[1001] = {1, 2,
                     3, 3, 
                     5, 0, 
                     1, 1,

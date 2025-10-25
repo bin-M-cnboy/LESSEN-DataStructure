@@ -33,6 +33,8 @@ class calculator {
         int priority_regular(char c);
         int priority(char c1, char c2);
         struct element operate(struct element element1, char c, struct element element2);
+        bool is_operator(char c);
+        bool is_unary_minus();  // 判断是否为负号
 };
 
 }

@@ -32,8 +32,6 @@ int walk::get_value() {
     q.push(start);
     
     // 使用unordered_set记录访问过的状态，避免重复
-    // 状态用字符串表示: "x,y,steps,已获取金币集合"
-    // 为简化，我们用"x,y,剩余步数"作为状态标识
     unordered_set<int> visited;
     
     while (!q.empty()) {
@@ -43,7 +41,7 @@ int walk::get_value() {
         if (current.value > max_value) max_value = current.value;
         if (current.steps <= 0) continue;
         
-        // 尝试移动到每个金币位置 BFS
+        // BFS尝试移动到每个金币位置 
         for (int i = 0; i < gold_num; i++) {            
             if (current.get_gold.find(i)) continue; // 如果已经获取过这个金币，跳过
             
