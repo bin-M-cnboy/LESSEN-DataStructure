@@ -8,9 +8,10 @@ std::string calculator::get_expr() {
 }
 
 // 表达式合法性
-bool calculator::legal() {  
+bool calculator::legal() {
     int bracket = 0;
     bool last_is_operator = true;  // 标记上一个字符是否为运算符
+    bool has_number = false;  // 标记是否包含数字
     
     for (size_t i = 0; i < expr.length(); i++) {
         char c = expr[i];
@@ -22,6 +23,8 @@ bool calculator::legal() {
         } else if (c == ')') {
             bracket--;
             if (bracket < 0) return false;
+            // 检查空括号：右括号前面是左括号
+            if (i > 0 && expr[i-1] == '(') return false;
             last_is_operator = false;
         }
         // 2. 运算符合法性检查
@@ -56,10 +59,13 @@ bool calculator::legal() {
         // 4. 数字或小数点
         else if (isdigit(c) || c == '.') {
             last_is_operator = false;
+            if (isdigit(c)) { 
+                has_number = true;
+            }
         }
     }
     
-    return bracket == 0 && !last_is_operator;
+    return bracket == 0 && !last_is_operator && has_number;
 }
 
 // 运算符的优先级
@@ -242,29 +248,14 @@ struct calculator::element calculator::get_ans() {
     while (expr_index < expr.length()) {
         char c = expr[expr_index];
         
-        // 处理负号
+        // 处理负号：统一转换为 0 - x 的形式
         if (c == '-' && is_unary_minus()) {
+            // 将 0 入栈
+            struct element zero = {0, 0, 0.0};
+            num.push(zero);
+            // 将减号作为二元运算符入栈
+            op.push('-');
             expr_index++;
-            
-            // 确保还有字符可读
-            if (expr_index >= expr.length()) break;
-            
-            // 读取负号后的数字或子表达式
-            if (expr[expr_index] == '(') {
-                // 负号后是括号，将0入栈，然后将减号作为运算符
-                struct element zero = {0, 0, 0.0};
-                num.push(zero);
-                op.push('-');
-            } else if (isdigit(expr[expr_index]) || expr[expr_index] == '.') {
-                // 负号后是数字，直接读取并取负
-                struct element num_elem = read_num();
-                if (num_elem.flag == 0) {
-                    num_elem.num_int = -num_elem.num_int;
-                } else {
-                    num_elem.num_double = -num_elem.num_double;
-                }
-                num.push(num_elem);
-            }
         }
         
         else if (isdigit(c) || c == '.') { // 如果是数字或小数点开头
@@ -275,8 +266,7 @@ struct calculator::element calculator::get_ans() {
         else if (c == '(') {
             op.push(c);
             expr_index++;
-        } 
-        else if (c == ')') {// 右括号：弹出运算符直到遇到左括号
+        } else if (c == ')') {  // 右括号：弹出运算符直到遇到左括号
             while (!op.empty() && op.top() != '(') {
                 calculate_once();
             }
