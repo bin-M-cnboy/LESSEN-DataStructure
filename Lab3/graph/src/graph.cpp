@@ -3,7 +3,6 @@
 
 void graph::init(int u[],int v[],int w[])
 {
-    //TODO:完成邻接表存储图
     // 遍历所有边，构建邻接表
     for(int i = 0; i < edge_num; i++) {
         // 创建新的边节点
@@ -19,7 +18,6 @@ void graph::init(int u[],int v[],int w[])
 
 void graph::dfs(int s)
 {
-    //TODO:完成图的深度优先遍历，输出顶点编号
     // 标记当前节点为已访问
     vertex[s].visited = 1;
     

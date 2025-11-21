@@ -37,6 +37,7 @@ node_modules/
 vendor/
 dist/
 build/
+./build/
 target/
 out/
 

@@ -13,10 +13,6 @@ string ExpressionBinaryTreeNode::getValue() {
 }
 
 // 从后缀表达式构建表达式树
-// 参数:
-//    postfix - 后缀表达式字符串
-// 返回:
-//    返回构建的表达式树根节点
 ExpressionBinaryTreeNode* ExpressionBinaryTreeNode::buildFromPostfix(const string& postfix) {
     stack<ExpressionBinaryTreeNode*> nodeStack;  // 用于存储节点的栈
     
@@ -48,10 +44,6 @@ ExpressionBinaryTreeNode* ExpressionBinaryTreeNode::buildFromPostfix(const strin
 }
 
 // 从前缀表达式构建表达式树
-// 参数:
-//    prefix - 前缀表达式字符串
-// 返回:
-//    返回构建的表达式树根节点
 ExpressionBinaryTreeNode* ExpressionBinaryTreeNode::buildFromPrefix(const string& prefix) {
     stack<ExpressionBinaryTreeNode*> nodeStack;  // 用于存储节点的栈
     
@@ -86,11 +78,6 @@ ExpressionBinaryTreeNode* ExpressionBinaryTreeNode::buildFromPrefix(const string
 }
 
 // 从中缀表达式构建表达式树
-// 参数:
-//    infix - 中缀表达式字符串
-// 返回:
-//    返回构建的表达式树根节点
-// 由于上次的实验写过，为了减轻大家的负担，不用实现中缀表达式树的构建，以下代码供大家参考
 ExpressionBinaryTreeNode* ExpressionBinaryTreeNode::buildFromInfix(const string& infix) {
     stack<ExpressionBinaryTreeNode*> operandStack;  // 存储操作数的栈
     stack<char> operatorStack;  // 存储运算符的栈
